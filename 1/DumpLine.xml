@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>4AEF134A-4C99-4431-A897-6F6663203903</RulePackID>
+    <SKU>SKU-4AEF134A-4C99-4431-A897-6F6663203903</SKU>
+    <Name><![CDATA[DumpLine.xml]]></Name>
+    <Version>1.0</Version>
+    <Description><![CDATA[Description for DumpLine.xml]]></Description>
+    <Rules version="19.10">
+        <RuleDefinitions>
+            <StructuralRule formatVersion="19.10" language="java">
+                <RuleID>224166A0-3461-4661-969E-918ED309AE34</RuleID>
+                <VulnKingdom>PRIVATE</VulnKingdom>
+                <VulnCategory>PRIVATE</VulnCategory>
+                <VulnSubcategory>PRIVATE</VulnSubcategory>
+                <DefaultSeverity>5.0</DefaultSeverity>
+                <Description></Description>
+                <Predicate><![CDATA[
+                    AssignmentStatement as:
+                        as.lhs is [VariableAccess va:]
+                        and
+                        rhs is [Allocation a: 
+                            a.type.name contains "SAXBuilder"
+                        ]
+                ]]></Predicate>
+            </StructuralRule>
+            <CharacterizationRule formatVersion="19.10" language="java">
+                <RuleID>553277B8-EE5D-4B1D-A798-2F3764744DDF4E74</RuleID>
+                <VulnKingdom>Input Validation and Representation</VulnKingdom>
+                <VulnCategory>Privacy Violation</VulnCategory>
+                <DefaultSeverity>4.0</DefaultSeverity>
+                <Description/>
+                <StructuralMatch><![CDATA[
+                    FunctionCall fc:
+                        fc.name == "build" and fc.instance is [Expression e:]
+                ]]></StructuralMatch>
+                <Definition><![CDATA[
+                    TaintSink(e, [])
+            ]]></Definition>
+            </CharacterizationRule>
+            <CharacterizationRule formatVersion="19.10" language="cpp">
+                <RuleID>553277B8-5D-4B1D-A798-2F374DDF4E74</RuleID>
+                <StructuralMatch><![CDATA[
+                    FieldAccess fa:
+                        fa.name == "data"
+                        and fa.instance is [VariableAccess va:
+                            va.type.name == "Response"
+                        ]
+                ]]></StructuralMatch>
+                <Definition><![CDATA[
+                    TaintTransfer(fa, va)
+            ]]></Definition>
+            </CharacterizationRule>
+            <CharacterizationRule formatVersion="19.10" language="java">
+                <RuleID>EE5D-4B1D-A798-4D1B5E080A32</RuleID>
+                <StructuralMatch><![CDATA[
+                    AssignmentStatement as:
+                        as.lhs is [VariableAccess va:]
+                        and
+                        rhs is [Allocation a: 
+                            a.type.name contains "SAXBuilder"
+                        ]
+                ]]></StructuralMatch>
+                <Definition><![CDATA[
+                    TaintSource(va, {})
+            ]]></Definition>
+            </CharacterizationRule>
+                <DataflowSinkRule formatVersion="19.10" language="java">
+                <MetaInfo>
+                    <Group name="Accuracy">5.0</Group>
+                    <Group name="Impact">5.0</Group>
+                    <Group name="RemediationEffort">15.0</Group>
+                    <Group name="Probability">5.0</Group>
+                </MetaInfo>
+                <RuleID>DC5F3C70-C2F1-452A-8021-578C3E728F6A</RuleID>
+                <VulnCategory>dsfdasfdsa</VulnCategory>
+                <DefaultSeverity>5.0</DefaultSeverity>
+                <Description/>
+                <Sink>
+                    <InArguments>this</InArguments>
+                </Sink>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Pattern>.*</Pattern>
+                    </NamespaceName>
+                    <ClassName>
+                        <Pattern>.*</Pattern>
+                    </ClassName>
+                    <FunctionName>
+                        <Pattern>build</Pattern>
+                    </FunctionName>
+                    <ApplyTo implements="true" overrides="true" extends="true"/>
+                </FunctionIdentifier>
+            </DataflowSinkRule>
+<DataflowSourceRule formatVersion="19.10" language="java">
+                <RuleID>5E83F8A1-00DF-4C9E-AAFB-F3951DFB3AD1</RuleID>
+                <FunctionIdentifier>
+                    <NamespaceName>
+                        <Pattern>.*</Pattern>
+                    </NamespaceName>
+                    <ClassName>
+                        <Pattern>.*</Pattern>
+                    </ClassName>
+                    <FunctionName>
+                        <Pattern>setFeature</Pattern>
+                    </FunctionName>
+                    <ApplyTo implements="true" overrides="true" extends="true"/>
+                </FunctionIdentifier>
+                <OutArguments>this</OutArguments>
+            </DataflowSourceRule>
+		</RuleDefinitions>
+    </Rules>
+</RulePack>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RulePack xmlns="xmlns://www.fortifysoftware.com/schema/rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="RulePack">
+    <RulePackID>B5305F64-8A88-4485-8846-C126C17E86F4</RulePackID>
+    <SKU>SKU-B5305F64-8A88-4485-8846-C126C17E86F4</SKU>
+    <Name><![CDATA[rules.xml]]></Name>
+    <Version>1.0</Version>
+    <Description><![CDATA[Description for rules.xml]]></Description>
+    <Rules version="19.10">
+        <RuleDefinitions>
+    <ControlflowRule formatVersion="19.10" language="java">
+        <RuleID>66D36AD4-38CF-41C1-8C65-96198CFE1735</RuleID>
+        <VulnKingdom>Sax</VulnKingdom>
+        <VulnCategory>sax</VulnCategory>
+        <VulnSubcategory>sax</VulnSubcategory>
+        <DefaultSeverity>5</DefaultSeverity>
+        <Description></Description>
+        <FunctionIdentifier id="alloc">
+            <NamespaceName>
+                <Pattern>.*</Pattern>
+            </NamespaceName>
+            <ClassName>
+                <Pattern>.*</Pattern>
+            </ClassName>
+            <FunctionName>
+                <Pattern>SaxBuilder</Pattern>
+            </FunctionName>
+            <ApplyTo implements="true" overrides="true" extends="true"/>
+        </FunctionIdentifier>
+        <FunctionIdentifier id="set">
+            <NamespaceName>
+                <Pattern>.*</Pattern>
+            </NamespaceName>
+            <ClassName>
+                <Pattern>.*</Pattern>
+            </ClassName>
+            <FunctionName>
+                <Pattern>setFeature</Pattern>
+            </FunctionName>
+            <ApplyTo implements="true" overrides="true" extends="true"/>
+        </FunctionIdentifier>
+        <FunctionCallIdentifier id="build">
+            <FunctionIdentifier>
+                <NamespaceName>
+                    <Pattern>.*</Pattern>
+                </NamespaceName>
+                <ClassName>
+                    <Pattern>.*</Pattern>
+                </ClassName>
+                <FunctionName>
+                    <Pattern>build</Pattern>
+                </FunctionName>
+                <ApplyTo implements="true" overrides="true" extends="true"/>
+            </FunctionIdentifier>
+            <!--<Conditional>
+                <ConstantEq argument="" value=""/>
+            </Conditional>-->
+        </FunctionCallIdentifier>
+        <Definition><![CDATA[
+            state myStartState (start);
+            state myErrorState (error);
+        ]]></Definition>
+    </ControlflowRule>
+        </RuleDefinitions>
+    </Rules>
+</RulePack>
